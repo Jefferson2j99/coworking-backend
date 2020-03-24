@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const PointSchema = require('./utils/PointSchema');
+const mongoose = require("mongoose");
+const PointSchema = require("./utils/PointSchema");
 
 const CompanySchema = new mongoose.Schema({
   email: {
@@ -20,12 +20,14 @@ const CompanySchema = new mongoose.Schema({
   phone: String,
   location: {
     type: PointSchema,
-    index: '2dsphere'
+    index: "2dsphere"
   },
-  spots: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Spot'
-  }]
+  spots: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Spot"
+    }
+  ]
 });
 
-module.exports = mongoose.model('Company', CompanySchema);
+module.exports = mongoose.model("Company", CompanySchema);

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const SpotSchema = new mongoose.Schema({
   image: String,
@@ -6,12 +6,8 @@ const SpotSchema = new mongoose.Schema({
   name: String,
   company: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Company'
-  },
-}, {
-  toJson: {
-    virtuals: true
+    ref: "Company"
   }
 });
 
-module.exports = mongoose.model('Spot', SpotSchema);
+module.exports = mongoose.model("Spot", SpotSchema);
