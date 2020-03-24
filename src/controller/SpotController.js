@@ -1,14 +1,14 @@
-const Company = require('../models/Company');
-const Spot = require('../models/Spot');
+const Company = require("../models/Company");
+const Spot = require("../models/Spot");
 
 module.exports = {
-  async store(req, res) {
+  async createSpot(req, res) {
     const { image, price, name, company_id } = req.body;
 
-    const company = Company.findById(company_id);
+    const company = await Company.findById(company_id);
 
     if (!company) {
-      return res.json({ success: false, message: 'Empresa não existe!' });
+      return res.json({ success: false, message: "Empresa não existe!" });
     }
 
     const spot = await Spot.create({
@@ -18,8 +18,15 @@ module.exports = {
       company: company_id
     });
 
-    await spot.populate('company').execPopulate();
+    await Company.updateOne(
+      {
+        _id: company._id
+      },
+      {
+        $push: { spots: spot._id }
+      }
+    );
 
-    return res.json(spot);
+    return res.json({ success: true, message: "Local salvo com sucesso!" });
   }
-}
+};

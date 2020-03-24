@@ -1,9 +1,9 @@
-const Company = require('../models/Company');
-const Spot = require('../models/Spot');
-const parseStringAsArray = require('../utils/parseStringAsArray');
+const Company = require("../models/Company");
+const Spot = require("../models/Spot");
+const parseStringAsArray = require("../utils/parseStringAsArray");
 
 module.exports = {
-  async store(req, res) {
+  async createCompany(req, res) {
     const {
       email,
       password,
@@ -23,17 +23,17 @@ module.exports = {
     const companyName = await Company.findOne({ name });
 
     if (companyEmail) {
-      return res.json({ success: false, message: 'E-mail já existe' })
+      return res.json({ success: false, message: "Este e-mail já existe!" });
     }
 
     if (companyName) {
-      return res.json({ success: false, message: 'Nome já existe' })
+      return res.json({ success: false, message: "Este nome já existe!" });
     }
 
     const techsArray = parseStringAsArray(techs);
 
     const location = {
-      type: 'Point',
+      type: "Point",
       coordinates: [longitude, latitude]
     };
 
@@ -51,30 +51,36 @@ module.exports = {
       location
     });
 
-    return res.json({ success: true, message: 'Empresa criada com sucesso!' });
+    return res.json({ success: true, message: "Empresa criada com sucesso!" });
   },
 
   async login(req, res) {
-    const { email, senha } = req.body;
+    const { email, password } = req.body;
 
-    const company = await Company.findOne({ email, senha });
-
+    const company = await Company.findOne({ email, password }).populate(
+      "spots"
+    );
 
     if (!company) {
-      return res.json({ success: false, message: 'E-mail ou senha inválido!' })
+      return res.json({ success: false, message: "E-mail ou senha inválido!" });
     }
 
-    return res.json({ success: true, message: 'Logado com sucesso', id: company._id })
-
+    return res.json({
+      success: true,
+      message: "Logado com sucesso",
+      company
+    });
   },
 
-  async index(req, res) {
+  async findCompanyById(req, res) {
     const { id } = req.params;
 
-    const company = await Company.findOne({ _id: id });
+    const company = await Company.findById(id).populate("spots");
 
-    await company.populate('spot').execPopulate();
+    if (!company) {
+      return res.json({ success: false, message: "Empresa não existe!" });
+    }
 
     return res.json({ success: true, company });
   }
-}
+};
