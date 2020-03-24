@@ -1,14 +1,16 @@
-const express = require('express');
+const express = require("express");
 
-const CompanyController = require('./controller/CompanyController');
-const SpotController = require('./controller/SpotController');
+const CompanyController = require("./controller/CompanyController");
+const SpotController = require("./controller/SpotController");
 
 const routes = express.Router();
 
-routes.post('/company', CompanyController.store);
-routes.post('/login', CompanyController.login);
-routes.get('/company/:id', CompanyController.index);
+// Routes of company
+routes.post("/company", CompanyController.createCompany);
+routes.post("/company/login", CompanyController.login);
+routes.get("/company/:id", CompanyController.findCompanyById);
 
-routes.post('/spot', SpotController.store);
+// Routes of spot
+routes.post("/spot", SpotController.createSpot);
 
 module.exports = routes;
