@@ -28,5 +28,23 @@ module.exports = {
     );
 
     return res.json({ success: true, message: "Local salvo com sucesso!" });
+  },
+
+  async findSpotsByCompanyId(req, res) {
+    const { companyId } = req.params;
+
+    const spots = await Spot.find({ company: companyId });
+
+    if (!spots) {
+      return res.json({
+        succes: false,
+        spots: []
+      });
+    }
+
+    return res.json({
+      success: true,
+      spots
+    });
   }
 };

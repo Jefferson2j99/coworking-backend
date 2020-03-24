@@ -12,5 +12,6 @@ routes.get("/company/:id", CompanyController.findCompanyById);
 
 // Routes of spot
 routes.post("/spot", SpotController.createSpot);
+routes.get("/spot/:companyId", SpotController.findSpotsByCompanyId);
 
 module.exports = routes;
