@@ -18,6 +18,6 @@ app.use(express.json());
 app.use(routes);
 
 const port = process.env.PORT || 3333;
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Projeto rodando na porta ${port}`);
 });
