@@ -8,7 +8,7 @@ module.exports = {
     const company = await Company.findById(company_id);
 
     if (!company) {
-      return res.json({ success: false, message: "Empresa não existe!" });
+      return res.status(400).json({ success: false, message: "Empresa não existe!" });
     }
 
     const spot = await Spot.create({
@@ -27,7 +27,7 @@ module.exports = {
       }
     );
 
-    return res.json({ success: true, message: "Local salvo com sucesso!" });
+    return res.status(200).json({ success: true, message: "Local salvo com sucesso!" });
   },
 
   async findSpotsByCompanyId(req, res) {
@@ -36,13 +36,13 @@ module.exports = {
     const spots = await Spot.find({ company: companyId });
 
     if (!spots) {
-      return res.json({
+      return res.status(400).json({
         succes: false,
         spots: []
       });
     }
 
-    return res.json({
+    return res.status(200).json({
       success: true,
       spots
     });

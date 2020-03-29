@@ -1,5 +1,4 @@
 const Company = require("../models/Company");
-const Spot = require("../models/Spot");
 const parseStringAsArray = require("../utils/parseStringAsArray");
 
 module.exports = {
@@ -23,11 +22,11 @@ module.exports = {
     const companyName = await Company.findOne({ name });
 
     if (companyEmail) {
-      return res.json({ success: false, message: "Este e-mail já existe!" });
+      return res.status(400).json({ success: false, message: "Este e-mail já existe!" });
     }
 
     if (companyName) {
-      return res.json({ success: false, message: "Este nome já existe!" });
+      return res.status(400).json({ success: false, message: "Este nome já existe!" });
     }
 
     const techsArray = parseStringAsArray(techs);
@@ -51,7 +50,7 @@ module.exports = {
       location
     });
 
-    return res.json({ success: true, message: "Empresa criada com sucesso!" });
+    return res.status(200).json({ success: true, message: "Empresa criada com sucesso!" });
   },
 
   async login(req, res) {
@@ -62,10 +61,10 @@ module.exports = {
     );
 
     if (!company) {
-      return res.json({ success: false, message: "E-mail ou senha inválido!" });
+      return res.status(400).json({ success: false, message: "E-mail ou senha inválido!" });
     }
 
-    return res.json({
+    return res.status(200).json({
       success: true,
       message: "Logado com sucesso",
       companyId: company._id
@@ -78,9 +77,9 @@ module.exports = {
     const company = await Company.findById(id).populate("spots");
 
     if (!company) {
-      return res.json({ success: false, message: "Empresa não existe!" });
+      return res.status(400).json({ success: false, message: "Empresa não existe!" });
     }
 
-    return res.json({ success: true, company });
+    return res.status(200).json({ success: true, company });
   }
 };
