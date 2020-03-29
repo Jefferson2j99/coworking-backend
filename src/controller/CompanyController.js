@@ -68,7 +68,7 @@ module.exports = {
     return res.json({
       success: true,
       message: "Logado com sucesso",
-      company
+      companyId: company._id
     });
   },
 
