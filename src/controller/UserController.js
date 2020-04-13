@@ -45,4 +45,22 @@ module.exports = {
 
     return res.json(companies);
   },
+
+  async getCompaniesByLocation(req, res) {
+    const { latitude, longitude } = req.query;
+
+    const company = await Company.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [longitude, latitude]
+          },
+          $maxDistance: 10000
+        }
+      }
+    });
+
+    return res.status(200).json({ sucess: true, company });
+  }
 }

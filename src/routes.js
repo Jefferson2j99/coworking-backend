@@ -20,6 +20,6 @@ routes.get("/spot/:companyId", SpotController.findSpotsByCompanyId);
 routes.post("/user", UserController.createUser);
 routes.post("/user/login", UserController.login);
 routes.get("/companies", UserController.getCompaniesByTechs);
-
+routes.get("/companies/location", UserController.getCompaniesByLocation);
 
 module.exports = routes;
