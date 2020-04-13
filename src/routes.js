@@ -2,6 +2,7 @@ const express = require("express");
 
 const CompanyController = require("./controller/CompanyController");
 const SpotController = require("./controller/SpotController");
+const UserController = require("./controller/UserController");
 
 const routes = express.Router();
 
@@ -13,5 +14,12 @@ routes.get("/company/:id", CompanyController.findCompanyById);
 // Routes of spot
 routes.post("/spot", SpotController.createSpot);
 routes.get("/spot/:companyId", SpotController.findSpotsByCompanyId);
+
+
+//Routes of user
+routes.post("/user", UserController.createUser);
+routes.post("/user/login", UserController.login);
+routes.get("/companies", UserController.getCompaniesByTechs);
+
 
 module.exports = routes;

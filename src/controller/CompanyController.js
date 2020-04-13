@@ -29,8 +29,6 @@ module.exports = {
       return res.status(400).json({ success: false, message: "Este nome já existe!" });
     }
 
-    const techsArray = parseStringAsArray(techs);
-
     const location = {
       type: "Point",
       coordinates: [longitude, latitude]
@@ -42,7 +40,7 @@ module.exports = {
       name,
       linkedin,
       logo,
-      techs: techsArray,
+      techs: techs.split(",").map(tech => tech.trim()),
       street,
       number,
       complement,
@@ -81,5 +79,6 @@ module.exports = {
     }
 
     return res.status(200).json({ success: true, company });
-  }
+  },
+
 };
