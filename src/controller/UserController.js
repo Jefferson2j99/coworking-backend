@@ -38,12 +38,14 @@ module.exports = {
     return res.status(200).json({ sucess: true, message: 'Usuário logado com sucesso.', user });
   },
 
-  async getCompaniesByTechs(req, res) {
-    const { tech } = req.query;
+  async getCompaniesByName(req, res) {
+    const { companyName } = req.params;
 
-    const companies = await Company.find({ techs: tech });
+    const companies = await Company.find({
+      name: { $regex: `${companyName}` },
+    });
 
-    return res.json(companies);
+    return res.status(200).json({ sucess: true, companies });
   },
 
   async getCompaniesByLocation(req, res) {
