@@ -61,7 +61,6 @@ module.exports = {
   async getCompaniesByLocation(req, res) {
     const { latitude, longitude } = req.query;
 
-    console.log("aqui");
     const companies = await Company.find({
       location: {
         $near: {
