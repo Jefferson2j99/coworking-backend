@@ -15,11 +15,10 @@ routes.get("/company/:id", CompanyController.findCompanyById);
 routes.post("/spot", SpotController.createSpot);
 routes.get("/spot/:companyId", SpotController.findSpotsByCompanyId);
 
-
 //Routes of user
 routes.post("/user", UserController.createUser);
 routes.post("/user/login", UserController.login);
-routes.get("/companies", UserController.getCompaniesByTechs);
+routes.get("/companies/:companyName", UserController.getCompaniesByName);
 routes.get("/companies/location", UserController.getCompaniesByLocation);
 
 module.exports = routes;
