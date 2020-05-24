@@ -1,5 +1,5 @@
-const User = require("../models/Users");
-const Company = require("../models/Company");
+const User = require('../models/Users');
+const Company = require('../models/Company');
 
 module.exports = {
   async createUser(req, res) {
@@ -8,9 +8,7 @@ module.exports = {
     const user = await User.findOne({ email });
 
     if (user) {
-      return res
-        .status(400)
-        .json({ sucess: false, message: "Usuário já existe." });
+      return res.status(400).json({ sucess: false, message: 'Usuário já existe.' });
     }
 
     await User.create({
@@ -18,12 +16,10 @@ module.exports = {
       email,
       password,
       phone,
-      techs: techs.split(",").map((tech) => tech.trim()),
+      techs: techs.split(",").map(tech => tech.trim())
     });
 
-    return res
-      .status(200)
-      .json({ sucess: true, message: "Usuário criado com sucesso." });
+    return res.status(200).json({ sucess: true, message: 'Usuário criado com sucesso.' })
   },
 
   async login(req, res) {
@@ -32,30 +28,22 @@ module.exports = {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ sucess: false, message: "Usuário não existe." });
+      return res.status(400).json({ sucess: false, message: 'Usuário não existe.' });
     }
 
     if (user.password !== password) {
-      return res
-        .status(400)
-        .json({ sucess: false, message: "Senha inválida." });
+      return res.status(400).json({ sucess: false, message: 'Senha inválida.' });
     }
 
-    return res
-      .status(200)
-      .json({ sucess: true, message: "Usuário logado com sucesso.", user });
+    return res.status(200).json({ sucess: true, message: 'Usuário logado com sucesso.', user });
   },
 
-  async getCompaniesByName(req, res) {
-    const { companyName } = req.params;
+  async getCompaniesByTechs(req, res) {
+    const { tech } = req.query;
 
-    const companies = await Company.find({
-      name: { $regex: `${companyName}` },
-    });
+    const companies = await Company.find({ techs: tech });
 
-    return res.status(200).json({ sucess: true, companies });
+    return res.json(companies);
   },
 
   async getCompaniesByLocation(req, res) {
@@ -65,14 +53,14 @@ module.exports = {
       location: {
         $near: {
           $geometry: {
-            type: "Point",
-            coordinates: [longitude, latitude],
+            type: 'Point',
+            coordinates: [longitude, latitude]
           },
-          $maxDistance: 10000,
-        },
-      },
+          $maxDistance: 10000
+        }
+      }
     });
 
     return res.status(200).json({ sucess: true, companies });
-  },
-};
+  }
+}
