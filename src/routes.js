@@ -3,6 +3,9 @@ const express = require("express");
 const CompanyController = require("./controller/CompanyController");
 const SpotController = require("./controller/SpotController");
 const UserController = require("./controller/UserController");
+const BookingController = require("./controller/BookingController");
+const ApprovalController = require("./controller/ApprovalController");
+const RejectionController = require("./controller/RejectionController");
 
 const routes = express.Router();
 
@@ -20,5 +23,10 @@ routes.post("/user", UserController.createUser);
 routes.post("/user/login", UserController.login);
 routes.get("/companies/location", UserController.getCompaniesByLocation);
 routes.get("/companies/:companyName", UserController.getCompaniesByName);
+
+// Booking
+routes.post("/spots/:spotId/bookings", BookingController.createBooking);
+routes.post("/bookings/:bookingId/approvals", ApprovalController.store);
+routes.post("/bookings/:bookingId/rejections", RejectionController.store);
 
 module.exports = routes;
